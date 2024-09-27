@@ -1,5 +1,6 @@
 
 public class Main {
+    public static int i = 0;
     public static void main(String[] args) throws InterruptedException {
         Count count = new Count(0);
         for (int j = 0; j < 100; j++) {
@@ -21,8 +22,8 @@ class Test extends Thread {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        Main.i++;
         count.plusI();
-        System.out.println(j+"쓰레드");
     }
 
 
