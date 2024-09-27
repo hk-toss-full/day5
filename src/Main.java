@@ -1,18 +1,19 @@
 
 public class Main {
-    public static int i = 0;
     public static void main(String[] args) throws InterruptedException {
+        Count count = new Count(0);
         for (int j = 0; j < 100; j++) {
-            Thread thread = new Test(j);
+            Thread thread = new Test(j, count);
             thread.start();
         }
         Thread.sleep(2000);
-        System.out.println(Test.i); // 100
+        System.out.println(count.i); // 100
     }
 }
 
 class Test extends Thread {
-    public static int i = 0;
+
+    public Count count;
     @Override
     public void run() {
         try {
@@ -20,16 +21,23 @@ class Test extends Thread {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        plusI();
+        count.plusI();
         System.out.println(j+"쓰레드");
-    }
-    public synchronized void plusI(){
-        i++;
     }
 
 
     public int j;
-    public Test(int j){
+    public Test(int j, Count count){
         this.j = j;
+        this.count = count;
+    }
+}
+class Count {
+    int i;
+    public Count(int i){
+        this.i = i;
+    }
+    public synchronized void plusI(){
+        i+=1;
     }
 }
